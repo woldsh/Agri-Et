@@ -21,11 +21,13 @@ export default function AdminSetupPage() {
             const name = "woldsh";
 
             // 1. Create Auth User
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            if (!auth) throw new Error("Firebase Auth not initialized");
+            const userCredential = await createUserWithEmailAndPassword(auth as any, email, password);
             const user = userCredential.user;
 
             // 2. Create User Profile
-            await setDoc(doc(db, "users", user.uid), {
+            if (!db) throw new Error("Firebase DB not initialized");
+            await setDoc(doc(db as any, "users", user.uid), {
                 id: user.uid,
                 name: name,
                 email: email,
@@ -35,7 +37,7 @@ export default function AdminSetupPage() {
             });
 
             // 3. Create Admin Collection Entry
-            await setDoc(doc(db, "admins", user.uid), {
+            await setDoc(doc(db as any, "admins", user.uid), {
                 uid: user.uid,
                 email: email,
                 name: name,
