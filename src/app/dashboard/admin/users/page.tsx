@@ -19,7 +19,7 @@ export default function UserManagementPage() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
+                const q = query(collection(db as any, "users"), orderBy("createdAt", "desc"));
                 const snapshot = await getDocs(q);
                 const userList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as UserProfile));
                 setUsers(userList);
@@ -30,7 +30,7 @@ export default function UserManagementPage() {
             }
         }
 
-        if (user) {
+        if (user && db) {
             fetchUsers();
         }
     }, [user]);
@@ -39,7 +39,7 @@ export default function UserManagementPage() {
         if (!confirm("Are you sure you want to delete this user? This action cannot be undone.")) return;
 
         try {
-            await deleteDoc(doc(db, "users", userId));
+            await deleteDoc(doc(db as any, "users", userId));
             setUsers(prev => prev.filter(u => u.id !== userId));
             alert("User deleted successfully.");
         } catch (error) {

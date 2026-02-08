@@ -21,7 +21,7 @@ export default function AdminListingsPage() {
         async function fetchListings() {
             try {
                 // In a real app with many listings, you'd want pagination
-                const q = query(collection(db, "listings"), orderBy("createdAt", "desc"));
+                const q = query(collection(db as any, "listings"), orderBy("createdAt", "desc"));
                 const snapshot = await getDocs(q);
                 const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Listing));
                 setListings(items);
@@ -32,7 +32,7 @@ export default function AdminListingsPage() {
             }
         }
 
-        if (user) {
+        if (user && db) {
             fetchListings();
         }
     }, [user]);
@@ -41,7 +41,7 @@ export default function AdminListingsPage() {
         if (!confirm("Are you sure you want to delete this listing? It will be permanently removed.")) return;
 
         try {
-            await deleteDoc(doc(db, "listings", listingId));
+            await deleteDoc(doc(db as any, "listings", listingId));
             setListings(prev => prev.filter(l => l.id !== listingId));
             alert("Listing deleted successfully.");
         } catch (error) {

@@ -34,9 +34,10 @@ export default function MarketplacePage() {
     const [maxPrice, setMaxPrice] = useState("");
 
     useEffect(() => {
+        if (!db) return;
         // Real-time listener for listings from Firestore
         const q = query(
-            collection(db, "listings"),
+            collection(db as any, "listings"),
             orderBy("createdAt", "desc")
         );
 

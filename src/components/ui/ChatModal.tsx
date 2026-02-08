@@ -53,9 +53,9 @@ export function ChatModal({ isOpen, onClose, receiverId, receiverName, listingTi
 
     useEffect(() => {
         const fetchReceiverProfile = async () => {
-            if (!receiverId) return;
+            if (!receiverId || !db) return;
             try {
-                const docRef = doc(db, "users", receiverId);
+                const docRef = doc(db as any, "users", receiverId);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     setReceiverProfile(docSnap.data() as UserProfile);
@@ -68,13 +68,13 @@ export function ChatModal({ isOpen, onClose, receiverId, receiverName, listingTi
     }, [receiverId]);
 
     useEffect(() => {
-        if (!user || !isOpen) return;
+        if (!user || !isOpen || !db) return;
 
         setLoading(true);
 
         // Listen to messages in real-time
         const q = query(
-            collection(db, "messages"),
+            collection(db as any, "messages"),
             where("conversationId", "==", conversationId),
             orderBy("createdAt", "asc")
         );
@@ -107,9 +107,9 @@ export function ChatModal({ isOpen, onClose, receiverId, receiverName, listingTi
 
         if (unreadMessages.length > 0) {
             console.log(`[ChatModal] Marking ${unreadMessages.length} messages as read...`);
-            const batch = writeBatch(db);
+            const batch = writeBatch(db as any);
             unreadMessages.forEach(msg => {
-                const msgRef = doc(db, "messages", msg.id);
+                const msgRef = doc(db as any, "messages", msg.id);
                 batch.update(msgRef, { read: true });
             });
             batch.commit()
@@ -124,7 +124,8 @@ export function ChatModal({ isOpen, onClose, receiverId, receiverName, listingTi
 
         setSending(true);
         try {
-            await addDoc(collection(db, "messages"), {
+            if (!db) throw new Error("Firebase not initialized");
+            await addDoc(collection(db as any, "messages"), {
                 conversationId,
                 senderId: user.uid,
                 receiverId,

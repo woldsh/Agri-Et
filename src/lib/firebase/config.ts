@@ -12,14 +12,21 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase only if the API key is present
-const app = (firebaseConfig.apiKey && getApps().length === 0)
-    ? initializeApp(firebaseConfig)
-    : (getApps().length > 0 ? getApp() : null);
+import { FirebaseApp } from "firebase/app";
+import { Auth } from "firebase/auth";
+import { Firestore } from "firebase/firestore";
+import { FirebaseStorage } from "firebase/storage";
 
-// Provide fallback values if app is null
-const auth = app ? getAuth(app) : null as any;
-const db = app ? getFirestore(app) : null as any;
-const storage = app ? getStorage(app) : null as any;
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
+let storage: FirebaseStorage | null = null;
+
+if (firebaseConfig.apiKey) {
+    app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    storage = getStorage(app);
+}
 
 export { app, auth, db, storage };

@@ -50,6 +50,7 @@ export function PostListingForm({ onSuccess }: { onSuccess?: () => void }) {
             const mediaUrls = await Promise.all(files.map((file: File) => uploadMedia(file)));
 
             // Save listing to Firestore
+            if (!db) throw new Error("Firebase not initialized");
             await addDoc(collection(db, "listings"), {
                 userId: user.uid,
                 title,

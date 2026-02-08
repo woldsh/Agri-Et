@@ -269,12 +269,12 @@ export const translations = {
             promoSubtitle: "Reach thousands of buyers directly.",
             promoButton: "Post a Listing",
             category: {
-                cereals: "Cereals",
-                pulses: "Pulses",
-                oilseeds: "Oilseeds",
-                cashCrops: "Cash crops",
-                fruits: "Fruits",
+                crops: "Crops",
                 vegetables: "Vegetables",
+                fruits: "Fruits",
+                livestock: "Livestock",
+                poultry: "Poultry",
+                dairy: "Dairy",
                 spices: "Spices",
                 livestockProducts: "Livestock products"
             }
@@ -548,12 +548,12 @@ export const translations = {
             promoSubtitle: "በቀጥታ በሺዎች የሚቆጠሩ ገዢዎችን ያግኙ።",
             promoButton: "ምርት ይለጥፉ",
             category: {
-                cereals: "እህሎች",
-                pulses: "ጥራጥሬዎች",
-                oilseeds: "የቅባት እህሎች",
-                cashCrops: "የገበያ ሰብሎች",
-                fruits: "ፍራፍሬዎች",
+                crops: "ሰብሎች",
                 vegetables: "አትክልቶች",
+                fruits: "ፍራፍሬዎች",
+                livestock: "ከብቶች",
+                poultry: "ዶሮ እርባታ",
+                dairy: "ወተት እና የወተት ተዋጽኦ",
                 spices: "ቅመማ ቅመሞች",
                 livestockProducts: "የእንስሳት ተዋጽኦ"
             }
@@ -827,12 +827,12 @@ export const translations = {
             promoSubtitle: "Kallattiin bitattoota kumaatamaan qunnamaa.",
             promoButton: "Gurgurtaaf dhiyeessi",
             category: {
-                cereals: "Midhaan",
-                pulses: "Midhaan Dheedhii",
-                oilseeds: "Midhaan Zayitaa",
-                cashCrops: "Midhaan Gabaa",
-                fruits: "Muduraa",
+                crops: "Oomisha",
                 vegetables: "Kuduraa",
+                fruits: "Muduraa",
+                livestock: "Beeyilada",
+                poultry: "Lukkuu",
+                dairy: "Bu'aa Aannanii",
                 spices: "Mi'eessituu",
                 livestockProducts: "Bu'aa Beeyiladaa"
             }
@@ -1105,13 +1105,13 @@ export const translations = {
             promoSubtitle: "ንኣሽሓት ዓደግቲ ብቐጥታ ርኸብዎም።",
             promoButton: "ምርቲ ለጥፉ",
             category: {
-                cereals: "እኽሊ",
-                pulses: "ጥራጥረ",
-                oilseeds: "ናይ ዘይቲ እኽልታት",
-                cashCrops: "ናይ ሸይጥ እኽልታት",
-                fruits: "ፍረታት",
+                crops: "ምርትታት",
                 vegetables: "ኣሕምልቲ",
-                spices: "ቅመማት",
+                fruits: "ፍረታታት",
+                livestock: "ከብቲ",
+                poultry: "ደርሆ",
+                dairy: "ጸባን ጸባ ፍርያትን",
+                spices: "ቀመማት",
                 livestockProducts: "ውጽኢት እንስሳ"
             }
         }

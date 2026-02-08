@@ -49,6 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const ensureUserProfile = async (firebaseUser: User): Promise<UserProfile> => {
+        if (!db) return buildDefaultProfile(firebaseUser);
         const docRef = doc(db, "users", firebaseUser.uid);
         const docSnap = await getDoc(docRef);
 
@@ -62,6 +63,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
+        if (!auth) {
+            setLoading(false);
+            return;
+        }
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             setUser(firebaseUser);
 
@@ -79,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     const signUp = async (email: string, pass: string, name: string, phone: string, role: string, region: string, zone: string, woreda: string, city: string) => {
-        const res = await createUserWithEmailAndPassword(auth, email, pass);
+        const res = await createUserWithEmailAndPassword(auth as any, email, pass);
         const userId = res.user.uid;
 
         const newProfile: UserProfile = {
@@ -94,29 +99,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             createdAt: new Date(),
         };
 
-        await setDoc(doc(db, "users", userId), newProfile);
+        await setDoc(doc(db as any, "users", userId), newProfile);
         setProfile(newProfile);
     };
 
     const signIn = async (email: string, pass: string) => {
-        await signInWithEmailAndPassword(auth, email, pass);
+        await signInWithEmailAndPassword(auth as any, email, pass);
     };
 
     const signInWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: "select_account" });
 
-        const res = await signInWithPopup(auth, provider);
+        const res = await signInWithPopup(auth as any, provider);
         const ensuredProfile = await ensureUserProfile(res.user);
         setProfile(ensuredProfile);
     };
 
     const signOut = async () => {
-        await firebaseSignOut(auth);
+        await firebaseSignOut(auth as any);
     };
 
     const updateUserProfile = async (data: Partial<UserProfile>) => {
-        if (!user || !profile) return;
+        if (!user || !profile || !db) return;
 
         const docRef = doc(db, "users", user.uid);
         await setDoc(docRef, data, { merge: true });

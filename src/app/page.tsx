@@ -41,6 +41,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchFeaturedListings = async () => {
+      if (!db) return;
       try {
         const q = query(collection(db, "listings"), orderBy("createdAt", "desc"), limit(3));
         const snapshot = await getDocs(q);

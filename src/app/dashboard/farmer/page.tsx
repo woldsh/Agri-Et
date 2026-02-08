@@ -26,7 +26,7 @@ export default function FarmerDashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!user) return;
+        if (!user || !db) return;
 
         const q = query(
             collection(db, "listings"),

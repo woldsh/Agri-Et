@@ -29,7 +29,7 @@ export default function MerchantDashboard() {
     const [myListings, setMyListings] = useState<Listing[]>([]);
 
     useEffect(() => {
-        if (!user) return;
+        if (!user || !db) return;
 
         // Fetch recent listings to recommend
         const q = query(

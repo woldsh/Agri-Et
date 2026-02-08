@@ -8,7 +8,7 @@ export function useUnreadMessages() {
     const [unreadCount, setUnreadCount] = useState(0);
 
     useEffect(() => {
-        if (!user) {
+        if (!user || !db) {
             setUnreadCount(0);
             return;
         }

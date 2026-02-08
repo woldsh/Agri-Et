@@ -18,12 +18,12 @@ export default function AdminDashboard() {
     const [recentListings, setRecentListings] = useState<Listing[]>([]);
 
     useEffect(() => {
-        if (!user) return;
+        if (!user || !db) return;
 
         async function fetchStats() {
             try {
-                const usersColl = collection(db, "users");
-                const listingsColl = collection(db, "listings");
+                const usersColl = collection(db as any, "users");
+                const listingsColl = collection(db as any, "listings");
 
                 const userSnapshot = await getCountFromServer(usersColl);
                 const listingSnapshot = await getCountFromServer(listingsColl);
@@ -39,7 +39,7 @@ export default function AdminDashboard() {
         }
 
         const q = query(
-            collection(db, "listings"),
+            collection(db as any, "listings"),
             orderBy("createdAt", "desc"),
             limit(5)
         );
@@ -59,7 +59,7 @@ export default function AdminDashboard() {
     const handleDeleteListing = async (id: string) => {
         if (confirm("Are you sure you want to delete this listing?")) {
             try {
-                await deleteDoc(doc(db, "listings", id));
+                await deleteDoc(doc(db as any, "listings", id));
             } catch (error) {
                 console.error("Error deleting listing:", error);
                 alert("Failed to delete listing");
