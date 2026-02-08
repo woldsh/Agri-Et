@@ -127,7 +127,7 @@ export default function AdminListingsPage() {
                                     <td className="px-6 py-4">
                                         <div className="text-sm">
                                             <p className="font-bold text-primary-600">ETB {item.price}</p>
-                                            <p className="text-zinc-500">{item.quantity} {item.unit}</p>
+                                            <p className="text-zinc-500">{item.quantity}</p>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
