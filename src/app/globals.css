@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Ultra Premium Forest/Emerald Palette */
+  --color-primary-50: #f2fcf5;
+  --color-primary-100: #e1f7e8;
+  --color-primary-200: #c3eed3;
+  --color-primary-300: #94e0b3;
+  --color-primary-400: #58cb8e;
+  --color-primary-500: #2faf6e;
+  --color-primary-600: #1f8c56;
+  --color-primary-700: #1a7047;
+  --color-primary-800: #18593b;
+  --color-primary-900: #144932;
+  --color-primary-950: #0a281c;
+  /* Deep, rich forest green */
+
+  /* Luxury Harvest Gold Accents */
+  --color-accent-50: #fefce8;
+  --color-accent-100: #fef9c3;
+  --color-accent-200: #fef08a;
+  --color-accent-300: #fde047;
+  --color-accent-400: #facc15;
+  --color-accent-500: #eab308;
+  --color-accent-600: #ca8a04;
+  --color-accent-700: #a16207;
+  --color-accent-800: #854d0e;
+  --color-accent-900: #713f12;
+  --color-accent-950: #422006;
+
+  /* Glassmorphism Utilities */
+  --backdrop-blur-xs: 2px;
+  --backdrop-blur-xl: 20px;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a281c;
+  /* Using primary-950 for text for softer contrast than pure black */
+
+  /* Glass Effects */
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 140, 86, 0.15);
+}
+
+/* Dark mode override */
+:root:has(.dark),
+.dark {
+  --background: #05140e;
+  /* Even darker green-black */
+  --foreground: #e1f7e8;
+
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-bg: rgba(10, 40, 28, 0.7);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll from animations */
+}
+
+/* Custom Utilities for Glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
