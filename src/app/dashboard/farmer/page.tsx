@@ -29,7 +29,7 @@ export default function FarmerDashboard() {
         if (!user || !db) return;
 
         const q = query(
-            collection(db, "listings"),
+            collection(db as any, "listings"),
             where("userId", "==", user.uid),
             orderBy("createdAt", "desc")
         );
@@ -47,8 +47,9 @@ export default function FarmerDashboard() {
     }, [user]);
 
     const handleDelete = async (id: string) => {
+        if (!db) return;
         if (confirm(t('farmer.deleteConfirm'))) {
-            await deleteDoc(doc(db, "listings", id));
+            await deleteDoc(doc(db as any, "listings", id));
         }
     };
 

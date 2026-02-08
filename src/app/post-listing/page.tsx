@@ -41,7 +41,8 @@ export default function CreateListingPage() {
             const mediaUrls = await Promise.all(files.map((file: File) => uploadMedia(file)));
 
             // Save listing to Firestore
-            await addDoc(collection(db, "listings"), {
+            if (!db) throw new Error("Firebase not initialized");
+            await addDoc(collection(db as any, "listings"), {
                 userId: user.uid,
                 title,
                 description,

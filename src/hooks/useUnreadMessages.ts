@@ -15,7 +15,7 @@ export function useUnreadMessages() {
 
         // Query for messages where the receiver is the current user and read is false
         const q = query(
-            collection(db, "messages"),
+            collection(db as any, "messages"),
             where("receiverId", "==", user.uid),
             where("read", "==", false)
         );

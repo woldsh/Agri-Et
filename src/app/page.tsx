@@ -43,8 +43,8 @@ export default function Home() {
     const fetchFeaturedListings = async () => {
       if (!db) return;
       try {
-        const q = query(collection(db, "listings"), orderBy("createdAt", "desc"), limit(3));
-        const snapshot = await getDocs(q);
+        const q = query(collection(db as any, "listings"), orderBy("createdAt", "desc"), limit(3));
+        const snapshot = await getDocs(q as any);
         const listings = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Listing[];
         setFeaturedListings(listings);
       } catch (error) {

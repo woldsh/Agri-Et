@@ -51,7 +51,7 @@ export function PostListingForm({ onSuccess }: { onSuccess?: () => void }) {
 
             // Save listing to Firestore
             if (!db) throw new Error("Firebase not initialized");
-            await addDoc(collection(db, "listings"), {
+            await addDoc(collection(db as any, "listings"), {
                 userId: user.uid,
                 title,
                 description,

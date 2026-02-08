@@ -14,7 +14,7 @@ export function useListings() {
 
     setLoading(true);
     try {
-      const listingRef = doc(db, "listings", listingId);
+      const listingRef = doc(db as any, "listings", listingId);
 
       await updateDoc(listingRef, {
         likesCount: increment(isLiked ? -1 : 1),

@@ -50,8 +50,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const ensureUserProfile = async (firebaseUser: User): Promise<UserProfile> => {
         if (!db) return buildDefaultProfile(firebaseUser);
-        const docRef = doc(db, "users", firebaseUser.uid);
-        const docSnap = await getDoc(docRef);
+        const docRef = doc(db as any, "users", firebaseUser.uid);
+        const docSnap = await getDoc(docRef as any);
 
         if (docSnap.exists()) {
             return docSnap.data() as UserProfile;
@@ -123,8 +123,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const updateUserProfile = async (data: Partial<UserProfile>) => {
         if (!user || !profile || !db) return;
 
-        const docRef = doc(db, "users", user.uid);
-        await setDoc(docRef, data, { merge: true });
+        const docRef = doc(db as any, "users", user.uid);
+        await setDoc(docRef as any, data, { merge: true });
 
         setProfile({ ...profile, ...data });
     };

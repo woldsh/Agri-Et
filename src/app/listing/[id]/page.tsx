@@ -28,8 +28,8 @@ export default function ListingDetailPage() {
 
     useEffect(() => {
         const checkLikeStatus = async () => {
-            if (!user || !params.id) return;
-            const likeDoc = await getDoc(doc(db, "users", user.uid, "saved", params.id as string));
+            if (!db) return;
+            const likeDoc = await getDoc(doc(db as any, "users", user.uid, "saved", params.id as string) as any);
             setIsLiked(likeDoc.exists());
         };
         checkLikeStatus();
@@ -43,14 +43,15 @@ export default function ListingDetailPage() {
         }
 
         const listingId = params.id as string;
-        const likeRef = doc(db, "users", user.uid, "saved", listingId);
+        if (!db) return;
+        const likeRef = doc(db as any, "users", user.uid, "saved", listingId);
 
         try {
             if (isLiked) {
-                await deleteDoc(likeRef);
+                await deleteDoc(likeRef as any);
                 setIsLiked(false);
             } else {
-                await setDoc(likeRef, {
+                await setDoc(likeRef as any, {
                     listingId,
                     savedAt: serverTimestamp(),
                     ...listing // Optionally save snippet of listing data for easier listing in dashboard
@@ -68,8 +69,9 @@ export default function ListingDetailPage() {
             if (!params.id) return;
 
             try {
+                if (!db) return;
                 // Fetch listing
-                const listingDoc = await getDoc(doc(db, "listings", params.id as string));
+                const listingDoc = await getDoc(doc(db as any, "listings", params.id as string) as any);
 
                 if (listingDoc.exists()) {
                     const listingData = { id: listingDoc.id, ...listingDoc.data() } as Listing;
@@ -79,8 +81,8 @@ export default function ListingDetailPage() {
                     const viewKey = `viewed_${params.id}`;
                     if (!sessionStorage.getItem(viewKey)) {
                         try {
-                            const listingRef = doc(db, "listings", params.id as string);
-                            await updateDoc(listingRef, {
+                            const listingRef = doc(db as any, "listings", params.id as string);
+                            await updateDoc(listingRef as any, {
                                 views: increment(1)
                             });
                             sessionStorage.setItem(viewKey, "true");
@@ -90,7 +92,7 @@ export default function ListingDetailPage() {
                     }
 
                     // Fetch farmer profile
-                    const farmerDoc = await getDoc(doc(db, "users", listingData.userId));
+                    const farmerDoc = await getDoc(doc(db as any, "users", listingData.userId) as any);
                     if (farmerDoc.exists()) {
                         setFarmer(farmerDoc.data() as UserProfile);
                     }

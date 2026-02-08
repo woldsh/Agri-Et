@@ -33,7 +33,7 @@ export default function MerchantDashboard() {
 
         // Fetch recent listings to recommend
         const q = query(
-            collection(db, "listings"),
+            collection(db as any, "listings"),
             orderBy("createdAt", "desc"),
             limit(10)
         );
@@ -55,7 +55,7 @@ export default function MerchantDashboard() {
 
         // Fetch user's own listings for stats
         const listingsQuery = query(
-            collection(db, "listings"),
+            collection(db as any, "listings"),
             where("userId", "==", user.uid)
         );
 

@@ -21,7 +21,8 @@ export default function MessagesPage() {
         // For simplicity, we'll fetch once for the list structure, but could upgrade to onSnapshot for the list itself
         const fetchConversations = async () => {
             try {
-                const messagesRef = collection(db, "messages");
+                if (!db) return;
+                const messagesRef = collection(db as any, "messages");
                 const q = query(
                     messagesRef,
                     or(
@@ -62,10 +63,10 @@ export default function MessagesPage() {
                     const conversationsWithNames = await Promise.all(
                         Array.from(conversationsMap.values()).map(async (conv) => {
                             // Optimized: In a real app, store user names in the message doc or a separate 'conversations' collection
-                            const userDoc = await getDoc(doc(db, "users", conv.otherUserId));
+                            const userDoc = await getDoc(doc(db as any, "users", conv.otherUserId) as any);
                             return {
                                 ...conv,
-                                otherUserName: userDoc.exists() ? userDoc.data()?.name : "Unknown User",
+                                otherUserName: userDoc.exists() ? (userDoc.data() as any)?.name : "Unknown User",
                             };
                         })
                     );
