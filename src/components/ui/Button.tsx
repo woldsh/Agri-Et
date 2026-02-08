@@ -9,6 +9,7 @@ interface ButtonProps extends HTMLMotionProps<"button"> {
     size?: "sm" | "md" | "lg" | "xl";
     isLoading?: boolean;
     glow?: boolean;
+    children?: React.ReactNode;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
